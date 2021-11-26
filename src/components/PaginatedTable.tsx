@@ -12,17 +12,23 @@ import {
 } from '@chakra-ui/react';
 import { memo, useMemo } from 'react';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
-import { usePagination, useTable } from 'react-table';
+import { usePagination, useTable, Column } from 'react-table';
 
-const PaginatedTable = ({
+const PaginatedTable = <D extends object>({
   columns = [],
   data = [],
   perPage = 13,
   isBoxed = false,
   isLoading = false,
+}: {
+  columns: Column<D>[];
+  data: D[];
+  perPage?: number;
+  isBoxed?: boolean;
+  isLoading?: boolean;
 }) => {
   const tableData = useMemo(
-    () => (isLoading ? Array(5).fill({}) : data),
+    () => (isLoading ? Array<D>(5).fill({} as D) : data),
     [isLoading, data]
   );
 
@@ -31,7 +37,7 @@ const PaginatedTable = ({
       isLoading
         ? columns.map(column => ({
             ...column,
-            Cell: <Skeleton height="20px" speed="0" />,
+            Cell: <Skeleton height="20px" speed={0} />,
           }))
         : columns,
     [isLoading, columns]

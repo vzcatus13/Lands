@@ -1,11 +1,19 @@
 import { Skeleton } from '@chakra-ui/skeleton';
 import { useJsApiLoader, GoogleMap as Map } from '@react-google-maps/api';
-import { memo } from 'react';
+import { CSSProperties, memo } from 'react';
 import { isEqual } from 'lodash';
 
-const GoogleMap = ({ styles, center = { lat: 0, lng: 0 }, options = {} }) => {
+const GoogleMap = ({
+  styles = {},
+  center = { lat: 0, lng: 0 },
+  options = {},
+}: {
+  styles?: CSSProperties;
+  center: google.maps.LatLng | google.maps.LatLngLiteral;
+  options?: google.maps.MapOptions;
+}) => {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY as string,
   });
 
   const renderMap = () => {

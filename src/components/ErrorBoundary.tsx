@@ -1,20 +1,33 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Flex, Text, Link } from '@chakra-ui/react';
 import Twemoji from './Twemoji';
 import { Link as RouterLink } from 'react-router-dom';
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
+interface Props {
+  children: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends React.Component<Props, State> {
+  public state: State = {
+    hasError: false,
+  };
+
+  public componentDidUpdate(prevProps: Props): void {
+    if (prevProps.children !== this.props.children) {
+      this.setState({ hasError: false });
+    }
   }
 
-  static getDerivedStateFromError(error) {
+  public static getDerivedStateFromError(_: Error): State {
     document.title = 'Error | Lands';
     return { hasError: true };
   }
 
-  render() {
+  public render() {
     if (this.state.hasError) {
       return (
         <Flex

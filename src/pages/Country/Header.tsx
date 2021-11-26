@@ -1,6 +1,7 @@
 import { Heading, Flex, Text } from '@chakra-ui/react';
+import { Country } from '../../types';
 
-const Header = ({ data }) => {
+const Header = ({ data }: { data?: Country }) => {
   const [common = '', nativeNames = {}, subregion = ''] = [
     data?.name.common,
     data?.name.nativeName,

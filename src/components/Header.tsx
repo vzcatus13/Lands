@@ -1,4 +1,4 @@
-import { Flex, Stack, IconButton, Link } from '@chakra-ui/react';
+import { Flex, Stack, IconButton } from '@chakra-ui/react';
 import ColorModeSwitcher from './ColorModeSwitcher';
 import { IoMdHome } from 'react-icons/io';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -29,17 +29,18 @@ const Header = () => {
         />
       </Stack>
       <Stack direction="row">
-        <Link as={RouterLink} to="/bookmarks" aria-label="Go to Bookmarks">
-          <IconButton
-            w="48px"
-            h="48px"
-            fontSize="24px"
-            variant="ghost"
-            color="current"
-            aria-hidden="true"
-            icon={<Bookmark />}
-          />
-        </Link>
+        <IconButton
+          as={RouterLink}
+          to="/bookmarks"
+          aria-label="Go to Bookmarks"
+          w="48px"
+          h="48px"
+          fontSize="24px"
+          variant="ghost"
+          color="current"
+          aria-hidden="true"
+          icon={<Bookmark />}
+        />
         <ColorModeSwitcher />
       </Stack>
     </Flex>

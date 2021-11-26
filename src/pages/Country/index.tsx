@@ -11,7 +11,8 @@ import { useEffect } from 'react';
 import BookmarkButton from './BookmarkButton';
 
 const Country = () => {
-  const { countryCode } = useParams();
+  const { countryCode = '' } = useParams();
+
   const { data, isLoading } = useGetCountry(countryCode);
 
   useEffect(() => {

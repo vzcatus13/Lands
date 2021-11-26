@@ -1,6 +1,6 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon, ChakraProps } from '@chakra-ui/react';
 
-const BookmarkAdd = props => {
+const BookmarkAdd = (props: ChakraProps) => {
   return (
     <Icon viewBox="0 0 24 24" {...props}>
       <path

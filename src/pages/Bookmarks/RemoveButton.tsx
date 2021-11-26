@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { BookmarkRemove } from '../../components/icons';
 import { remove } from '../../slices/bookmarksSlice';
 import { useEffect, useState } from 'react';
+import { AppDispatch } from '../../store';
 
 const RemoveButton = ({ countryCode = '', ...props }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [isLoading, setIsLoading] = useState(false);
 

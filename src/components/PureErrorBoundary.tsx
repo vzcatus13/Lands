@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-class PureErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+interface Props {
+  children: ReactNode;
+}
 
-  static getDerivedStateFromError(error) {
+interface State {
+  hasError: boolean;
+}
+
+class PureErrorBoundary extends React.Component<Props, State> {
+  public state: State = {
+    hasError: false,
+  };
+
+  public static getDerivedStateFromError(_: Error): State {
     document.title = 'Error | Lands';
     return { hasError: true };
   }

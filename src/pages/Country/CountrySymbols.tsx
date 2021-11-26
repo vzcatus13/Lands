@@ -1,10 +1,11 @@
 import { Stack, Image } from '@chakra-ui/react';
+import { Country } from '../../types';
 
-const CountrySymbols = ({ data }) => {
+const CountrySymbols = ({ data }: { data?: Country }) => {
   const [name = '', flagSrc = '', coatOfArmsSrc = ''] = [
     data?.name.common,
-    data?.flags.svg,
-    data?.coatOfArms.svg,
+    data?.flags?.svg,
+    data?.coatOfArms?.svg,
   ];
 
   return (

@@ -1,7 +1,12 @@
 import twemoji from 'twemoji';
-import { Image } from '@chakra-ui/react';
+import { Image, StyleProps } from '@chakra-ui/react';
 
-const Twemoji = ({ emoji, boxSize = 12, ...props }) => {
+const Twemoji = ({
+  emoji,
+  ...props
+}: {
+  emoji: string;
+} & StyleProps) => {
   const id = twemoji.convert.toCodePoint(emoji);
 
   if (emoji === undefined) {
@@ -11,9 +16,9 @@ const Twemoji = ({ emoji, boxSize = 12, ...props }) => {
   return (
     <Image
       src={`https://twemoji.maxcdn.com/v/latest/svg/${id}.svg`}
-      alt={emoji + " emoji symbol"}
+      alt={emoji + ' emoji symbol'}
       loading="lazy"
-      boxSize={boxSize}
+      boxSize={props.boxSize ?? 12}
       {...props}
     />
   );

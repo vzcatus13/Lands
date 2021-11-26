@@ -1,6 +1,7 @@
 import { Stack, Tag, Text } from '@chakra-ui/react';
+import { Country } from '../../types';
 
-const MainInfo = ({ data }) => {
+const MainInfo = ({ data }: { data?: Country }) => {
   const [
     independent = false,
     unMember = false,

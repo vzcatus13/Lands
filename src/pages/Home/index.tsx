@@ -15,6 +15,8 @@ import Twemoji from '../../components/Twemoji';
 import { Link as RouterLink } from 'react-router-dom';
 import PaginatedTable from '../../components/PaginatedTable';
 import { VscSearch } from 'react-icons/vsc';
+import { CellProps } from 'react-table';
+import { Country, GiniIndex } from '../../types';
 
 const Home = () => {
   const { data, isLoading } = useGetCountries();
@@ -22,7 +24,7 @@ const Home = () => {
   useEffect(() => {
     document.title = 'Lands';
   }, []);
-  
+
   const [filterName, setFilterName] = useState('');
   const memorizedFilteredData = useRef(new Map());
 
@@ -53,7 +55,7 @@ const Home = () => {
       {
         Header: 'Name',
         accessor: 'name',
-        Cell: v => {
+        Cell: (v: CellProps<Country>) => {
           if (v.value === undefined) return 'N/A';
           return (
             <Link
@@ -63,6 +65,7 @@ const Home = () => {
               <Flex alignItems="center">
                 <Twemoji
                   emoji={
+                    v.row.original.flag !== undefined &&
                     v.row.original.flag.length !== 0
                       ? v.row.original.flag
                       : '🤷'
@@ -108,10 +111,10 @@ const Home = () => {
         Header: 'Gini coefficient (in %)',
         accessor: 'gini',
         isNumeric: true,
-        Cell: v => {
+        Cell: (v: CellProps<Country, GiniIndex>) => {
           if (v.value === undefined) return 'N/A';
           if (Object.keys(v.value).length === 0) return 'N/S';
-          const gini = v.value[Math.max(Object.keys(v.value))];
+          const gini = v.value[Math.max(...Object.keys(v.value).map(Number))];
           let color;
 
           if (gini <= 25) {

@@ -9,12 +9,15 @@ import {
 } from '@chakra-ui/react';
 import ScrollableCarousel from '../../components/ScrollableCarousel';
 import { useSearchForPhotos } from '../../queries/api';
+import { Country } from '../../types';
 
-const Photos = ({
-  data: {
-    name: { common },
-  },
-}) => {
+const Photos = ({ data }: { data?: Country }) => {
+  if (data === undefined) return null;
+
+  return <RenderedPhotos common={data.name.common} />;
+};
+
+const RenderedPhotos = ({ common }: { common: string }) => {
   const { data, isLoading, isError } = useSearchForPhotos({
     query: common,
     perPage: 20,
@@ -34,7 +37,7 @@ const Photos = ({
       >
         <Stack direction="row" spacing="5px" borderRadius="8px">
           {!isLoading &&
-            data.results.map(d => {
+            data.results.map((d: any) => {
               return (
                 <Box
                   as="a"
@@ -66,7 +69,7 @@ const Photos = ({
             })}
 
           {isLoading &&
-            new Array(10).fill().map((_, i) => {
+            new Array(10).fill(null).map((_, i) => {
               return (
                 <Skeleton
                   key={i}

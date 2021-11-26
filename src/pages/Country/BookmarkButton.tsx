@@ -1,12 +1,16 @@
-import { Button, useToast } from '@chakra-ui/react';
+import { Button, useToast, ChakraProps } from '@chakra-ui/react';
 import { BookmarkAdd, BookmarkRemove } from '../../components/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { add, remove } from '../../slices/bookmarksSlice';
 import { useState } from 'react';
+import { AppDispatch, RootState } from '../../store';
 
-const BookmarkButton = ({ countryCode, ...props }) => {
-  const dispatch = useDispatch();
-  const isBookmarked = useSelector(state =>
+const BookmarkButton = ({
+  countryCode,
+  ...props
+}: { countryCode: string } & ChakraProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const isBookmarked = useSelector<RootState, boolean>(state =>
     state.bookmarks.data.includes(countryCode)
   );
 
