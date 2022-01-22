@@ -13,7 +13,7 @@ import { useGetCountries } from '../../queries/api';
 import { useEffect, useMemo, useState, useRef } from 'react';
 import Twemoji from '../../components/Twemoji';
 import { Link as RouterLink } from 'react-router-dom';
-import PaginatedTable from '../../components/PaginatedTable';
+import Table from '../../components/Table';
 import { VscSearch } from 'react-icons/vsc';
 
 const Home = () => {
@@ -22,7 +22,7 @@ const Home = () => {
   useEffect(() => {
     document.title = 'Lands';
   }, []);
-  
+
   const [filterName, setFilterName] = useState('');
   const memorizedFilteredData = useRef(new Map());
 
@@ -155,9 +155,10 @@ const Home = () => {
           </InputGroup>
         </Skeleton>
       </Box>
-      <PaginatedTable
+      <Table
         columns={columns}
         data={filteredData}
+        perPage={13}
         isLoading={isLoading}
         isBoxed={true}
       />
