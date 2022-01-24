@@ -5,6 +5,7 @@ import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 const Button = ({ icon, size, top, isHidden, ...styleProps }) => (
   <Box
     as="button"
+    type="button"
     position="absolute"
     height={`${size * 2}px`}
     width={`${size * 2}px`}
@@ -164,11 +165,8 @@ const ScrollableCarousel = forwardRef(
               top={dimensions.height / 2 - buttonSize}
               size={buttonSize}
               icon={<VscChevronLeft size={buttonSize} />}
-              isHidden={
-                !leftButtonVisibility ||
-                scrollableContainerRef.current === undefined
-              }
-              aria-label="Next"
+              isHidden={!leftButtonVisibility}
+              aria-label="Previous"
               onClick={scrollLeft}
             />
             <Button
@@ -176,11 +174,8 @@ const ScrollableCarousel = forwardRef(
               top={dimensions.height / 2 - buttonSize}
               size={buttonSize}
               icon={<VscChevronRight size={buttonSize} />}
-              isHidden={
-                !rightButtonVisibility ||
-                scrollableContainerRef.current === undefined
-              }
-              aria-label="Previous"
+              isHidden={!rightButtonVisibility}
+              aria-label="Next"
               onClick={scrollRight}
             />
           </>
@@ -194,6 +189,9 @@ const ScrollableCarousel = forwardRef(
           }}
           onScroll={handleScroll}
           ref={scrollableContainerRef}
+          data-testid="scrollable-container"
+          /* data-testid can be deleted from prod with babel plugin and react-app-rewired,
+          but I would not bother about it */
         >
           {children}
         </Box>
