@@ -60,12 +60,6 @@ const ScrollableCarousel = forwardRef(
       Math.floor(scrollWidth - scrollLeft) <= Math.floor(width);
 
     useEffect(() => {
-      if (ref) {
-        ref.current = scrollableContainerRef.current;
-      }
-    }, [scrollableContainerRef, ref]);
-
-    useEffect(() => {
       if (scrollableContainerRef.current) {
         setDimensions({
           width: scrollableContainerRef.current.offsetWidth,
@@ -74,6 +68,20 @@ const ScrollableCarousel = forwardRef(
         });
       }
     }, [children]);
+
+    useEffect(() => {
+      const handleResize = () => {
+        if (scrollableContainerRef.current !== null) {
+          setDimensions({
+            width: scrollableContainerRef.current.offsetWidth,
+            scrollWidth: scrollableContainerRef.current.scrollWidth,
+            height: scrollableContainerRef.current.offsetHeight,
+          });
+        }
+      };
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
       if (dimensions.scrollWidth <= dimensions.width) {
@@ -135,9 +143,6 @@ const ScrollableCarousel = forwardRef(
           left: -dimensions.width,
           behavior: 'smooth',
         });
-
-        scrollableContainerRef.current.scrollLeft <= 0 &&
-          setLeftButtonVisibility(false);
       }
     };
 
@@ -147,12 +152,6 @@ const ScrollableCarousel = forwardRef(
           left: dimensions.width,
           behavior: 'smooth',
         });
-
-        isEnd(
-          dimensions.width,
-          dimensions.scrollWidth,
-          scrollableContainerRef.current.scrollLeft
-        ) && setRightButtonVisibility(false);
       }
     };
 
@@ -188,7 +187,12 @@ const ScrollableCarousel = forwardRef(
             },
           }}
           onScroll={handleScroll}
-          ref={scrollableContainerRef}
+          ref={node => {
+            if (ref !== null) {
+              ref.current = node;
+            }
+            scrollableContainerRef.current = node;
+          }}
           data-testid="scrollable-container"
           /* data-testid can be deleted from prod with babel plugin and react-app-rewired,
           but I would not bother about it */
